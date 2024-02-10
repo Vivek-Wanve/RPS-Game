@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissor Game</title>
+    <style>
+        *{
+            margin:0;
+        }
+        body{
+            background-color: #00356B;
+            color: white;
+        }
+        #hd{
+            margin-top: 0.5%;
+            margin-left: 29.5%;
+            font-size: 4.5rem;
+            
+        }
+        h3{
+            padding: 4%;
+            font-size: 2rem;
+        }
+        #scorecard{
+            margin-left: 25%;
+            margin-top: 1%;
+            width:50%;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+
+        }
+        #moves{
+            margin-top: 7.5%;
+            margin-left: 36%;
+            margin-bottom: 1.5%;
+        }
+        h2{
+            font-size: 3rem;
+        }
+        p{
+            margin-top: 0.5%;
+            font-size: 1.5rem;
+            margin-left: 12%;
+        }
+        #buttons{
+            display: flex;
+            align-items:center;
+            justify-content: space-evenly;
+        }
+        .BTN{
+            width: 10%;
+            padding: 1%;
+            margin: 3%;
+            background-color: #228B22;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1rem;
+        }
+        .BTN:hover{
+            cursor: pointer;
+            border: 2px solid #39FF14;
+        }
+        h4{
+            font-size: 2rem;
+        }
+        #Result{
+            margin-top: 0.5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+        .nxtP{
+            display: none;
+            align-items: center;
+            justify-content: space-around;
+        }
+        h5{
+            font-size: 3.5rem;
+            color: #008000;
+        }
+        #playS{
+            margin-left: 40%;
+        }
+        #compS{
+            margin-left: 45%;
+        }
+        #over{
+            margin-top: 7.5%;
+            margin-bottom: 3%;
+        }
+        #restart{
+            margin-top: 1%;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1 id="hd">Rock Paper Scissor</h1>
+
+    <div id="scorecard">
+        <div  id="player">
+            <h3>Player</h3>
+            <h3 id="playS">0</h3>
+        </div>
+        <div id="comp">
+            <h3>Computer</h3>
+            <h3 id="compS">0</h3>
+        </div>
+    </div>
+
+    <div id="moves">
+        <h2>Choose your move</h2>
+        <p>Moves Left: 10</p>
+    </div>
+
+    <div id="buttons">
+        <button id="btn1" class="BTN">Rock</button>
+        <button id="btn2" class="BTN">Paper</button>
+        <button id="btn3" class="BTN">Scissors</button>
+    </div>
+
+    <div id="Result">
+        <h4></h4>
+    </div>
+
+
+
+    <div id="over" class="nxtP">
+        <h2>Game Over!!</h2>
+    </div>
+
+    <div id="finalR" class="nxtP">
+        <h5></h5>
+    </div>
+
+    <div id="restart" class="nxtP">
+        <button id="btn4" class="BTN">Restart</button>
+    </div>
+
+    <script>
+        let Btn1 = document.getElementById('btn1');
+        let Btn2 = document.getElementById('btn2');
+        let Btn3 = document.getElementById('btn3');
+        let Btn4 = document.getElementById('btn4');
+
+        Btn1.addEventListener('click', rock);
+        Btn2.addEventListener('click', paper);
+        Btn3.addEventListener('click', scissor);
+        Btn4.addEventListener('click', restartGame);
+        
+
+        let moves = document.getElementById('moves');
+        let buttons = document.getElementById('buttons');
+        let Result = document.getElementById('Result');
+
+        let over = document.getElementById('over');
+        let finalR = document.getElementById('finalR');
+        let restart = document.getElementById('restart');
+
+        let playerScore = 0;
+        let compScore = 0;
+        let movesLeft = 10;
+
+
+        //Rock - 0
+        //Paper - 1
+        //Scissors - 2
+
+        function rock(e){
+            let compValue = Math.floor(Math.random()*3);
+            if(compValue == 1){
+                compScore++;
+                movesLeft--;
+                compS.textContent = compScore;
+                moves.children[1].textContent = `Moves Left: ${movesLeft}`;
+                Result.children[0].textContent = "Computer Won";
+            }else if(compValue == 2){
+                playerScore++;
+                movesLeft--;
+                playS.textContent = playerScore;
+                moves.children[1].textContent = `Moves Left: ${movesLeft}`;
+                Result.children[0].textContent = "Player Won";
+            }else{
+                movesLeft--;
+                moves.children[1].textContent = `Moves Left: ${movesLeft}`;
+                Result.children[0].textContent = "Tie";
+            }
+
+            if(movesLeft == 0){
+                moves.replaceWith(over);
+                buttons.replaceWith(finalR);
+                Result.replaceWith(restart);
+                over.style.display = "flex";
+                finalR.style.display = "flex";
+                restart.style.display = "flex";
+                if(compScore > playerScore){
+                    finalR.children[0].textContent = "Computer Won The Game";
+                }else if(playerScore > compScore){
+                    finalR.children[0].textContent = "You Won The Game";
+                }else{
+                    finalR.children[0].textContent = "TIE";
+                }
+            }
+        }
+        function paper(e){
+            let compValue = Math.floor(Math.random()*3);
+            if(compValue == 0){
+                playerScore++;
+                movesLeft--;
+                playS.textContent = playerScore;
+                moves.children[1].textContent = `Moves Left: ${movesLeft}`;
+                Result.children[0].textContent = "Player Won";
+            }else if(compValue == 2){
+                compScore++;
+                movesLeft--;
+                compS.textContent = compScore;
+                moves.children[1].textContent = `Moves Left: ${movesLeft}`;
+                Result.children[0].textContent = "Computer Won";
+            }else{
+                movesLeft--;
+                moves.children[1].textContent = `Moves Left: ${movesLeft}`;
+                Result.children[0].textContent = "Tie";
+            }
+
+
+            if(movesLeft == 0){
+                moves.replaceWith(over);
+                buttons.replaceWith(finalR);
+                Result.replaceWith(restart);
+                over.style.display = "flex";
+                finalR.style.display = "flex";
+                restart.style.display = "flex";
+                if(compScore > playerScore){
+                    finalR.children[0].textContent = "Computer Won The Game";
+                }else if(playerScore > compScore){
+                    finalR.children[0].textContent = "You Won The Game";
+                }else{
+                    finalR.children[0].textContent = "TIE";
+                }
+            }
+        }
+
+        function scissor(e){
+            let compValue = Math.floor(Math.random()*3);
+            if(compValue == 0){
+                compScore++;
+                movesLeft--;
+                compS.textContent = compScore;
+                moves.children[1].textContent = `Moves Left: ${movesLeft}`;
+                Result.children[0].textContent = "Computer Won";
+            }else if(compValue == 1){
+                playerScore++;
+                movesLeft--;
+                playS.textContent = playerScore;
+                moves.children[1].textContent = `Moves Left: ${movesLeft}`;
+                Result.children[0].textContent = "Player Won";
+            }else{
+                movesLeft--;
+                moves.children[1].textContent = `Moves Left: ${movesLeft}`;
+                Result.children[0].textContent = "Tie";
+            }
+
+
+            if(movesLeft == 0){
+                moves.replaceWith(over);
+                buttons.replaceWith(finalR);
+                Result.replaceWith(restart);
+                over.style.display = "flex";
+                finalR.style.display = "flex";
+                restart.style.display = "flex";
+                if(compScore > playerScore){
+                    finalR.children[0].textContent = "Computer Won The Game";
+                }else if(playerScore > compScore){
+                    finalR.children[0].textContent = "You Won The Game";
+                }else{
+                    finalR.children[0].textContent = "TIE";
+                }
+            }
+        }
+
+
+        function restartGame(e){
+            
+
+
+
+            playerScore = 0;
+            compScore = 0;
+            movesLeft = 10;
+            compS.textContent = 0;
+            playS.textContent = 0;
+
+            over.replaceWith(moves);
+            finalR.replaceWith(buttons);
+            restart.replaceWith(Result);
+            over.style.display = "none";
+            finalR.style.display = "none";
+            restart.style.display = "none";
+
+            moves.children[1].textContent = `Moves Left: ${movesLeft}`;
+            Result.children[0].textContent = "";
+        }
+
+    </script>
+</body>
+</html>
+
